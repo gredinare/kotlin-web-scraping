@@ -5,7 +5,7 @@ import model.Console
 
 object MobyGamesConsoles: MobyGamesParser() {
 
-    private fun parserConsoleList(): List<Console> {
+    fun parserConsoleList(): List<Console> {
         val document = pageToDocument("$websiteUrl/platform")
         val consoleList = mutableListOf<Console>()
 

@@ -32,7 +32,7 @@ class ManipulateXls(
         }
     }
 
-    fun saveGamesInXls(file: String, gameList: List<Game>) {
+    fun saveGamesInXls(gameList: List<Game>) {
         val sheet = workbook.getSheetAt(1)
 
         for(game in gameList) {
@@ -50,7 +50,7 @@ class ManipulateXls(
         fileOut.close()
     }
 
-    fun readLastConsoleInConsoleList(file: String): Console? {
+    fun readLastConsoleInConsoleList(): Console? {
         val sheet = workbook.getSheetAt(0)
 
         val lastRow = sheet.lastRowNum
@@ -72,7 +72,7 @@ class ManipulateXls(
         )
     }
 
-    fun removeLastRow(file: String): Boolean {
+    fun removeLastRow(): Boolean {
         val sheet = workbook.getSheetAt(0)
 
         val lastRow = sheet.lastRowNum
