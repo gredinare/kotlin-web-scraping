@@ -10,7 +10,7 @@ class MobyGames: Parser() {
     fun parseGamePage(gameNumber: Int): Game {
         val document = pageToDocument("$websiteUrl$gameNumber")
 
-        val gameName: String = document.select(".mb-0").first()?.text() ?: "null"
+        val gameName: String = document.select(".mb-0").first()?.text() ?: "Dont Have Game here"
 
         println("$gameNumber: $gameName")
 

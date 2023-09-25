@@ -43,7 +43,6 @@ fun testSaveGame() {
     test.saveGame(gameTest)
     test.saveFile()
 
-
 }
 
 fun main(args: Array<String>) {
@@ -55,14 +54,3 @@ fun main(args: Array<String>) {
     testSaveGame()
 
 }
-
-// Jogo 0
-// released 1
-// console 2
-// mobyScore 3
-// critics score 4
-// Genero 5
-// perspective 6
-// art 7
-// setting 8
-// narrative 9

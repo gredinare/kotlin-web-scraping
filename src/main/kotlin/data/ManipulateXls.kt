@@ -34,3 +34,14 @@ class ManipulateXls(
         fileOut.close()
     }
 }
+
+// number 0
+// released 1
+// console 2
+// mobyScore 3
+// critics score 4
+// genre 5
+// perspective 6
+// art 7
+// setting 8
+// narrative 9
