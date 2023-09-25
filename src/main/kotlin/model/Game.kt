@@ -1,9 +1,15 @@
 package model
 
 data class Game(
+    val number: Int,
     val name: String,
-    val genre: String,
     val release: String,
-    val score: String,
-    val platform: List<String>
+    val platform: List<String>,
+    val mobyScore: String,
+    val criticScore: String,
+    val genre: String,
+    val perspective: String,
+    val art: String,
+    val setting: String,
+    val narrative: String
 )

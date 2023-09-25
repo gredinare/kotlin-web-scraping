@@ -8,11 +8,13 @@ import org.jsoup.nodes.Document
 
 abstract class Parser {
     private fun parsePage(websiteUrl: String): String {
-        var page = ""
+        var page = "error code: 1015"
 
-        val test = skrape(HttpFetcher) {
-            request { url = websiteUrl }
-            response { page = responseBody }
+        while(page == "error code: 1015") {
+            skrape(HttpFetcher) {
+                request { url = websiteUrl }
+                response { page = responseBody }
+            }
         }
 
         return page
