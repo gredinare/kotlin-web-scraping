@@ -46,11 +46,7 @@ fun testSaveGame() {
 }
 
 fun main(args: Array<String>) {
-    /*
     val test = MobyGames()
-    val game = test.parseGamePage(1)
-     */
-
-    testSaveGame()
+    test.parseGames()
 
 }

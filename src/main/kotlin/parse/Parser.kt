@@ -10,10 +10,15 @@ abstract class Parser {
     private fun parsePage(websiteUrl: String): String {
         var page = "error code: 1015"
 
-        while(page == "error code: 1015") {
-            skrape(HttpFetcher) {
-                request { url = websiteUrl }
-                response { page = responseBody }
+        while (page == "error code: 1015") {
+            try {
+                skrape(HttpFetcher) {
+                    request { url = websiteUrl }
+                    response { page = responseBody }
+                }
+            } catch (e: Exception) {
+                page = "error code: 1015"
+                println(e.message)
             }
         }
 

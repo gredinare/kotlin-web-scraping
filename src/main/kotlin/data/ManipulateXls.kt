@@ -11,7 +11,7 @@ class ManipulateXls(
 ) {
     private var workbook: Workbook = WorkbookFactory.create(FileInputStream(file))
 
-    fun saveGame(game: Game) {
+    private fun saveGame(game: Game) {
         val sheet = workbook.getSheetAt(0)
         val row = sheet.createRow(game.number)
 
@@ -28,20 +28,16 @@ class ManipulateXls(
         row.createCell(10).setCellValue(game.narrative)
     }
 
-    fun saveFile() {
+    private fun saveFile() {
         val fileOut = FileOutputStream(file)
         workbook.write(fileOut)
         fileOut.close()
     }
-}
 
-// number 0
-// released 1
-// console 2
-// mobyScore 3
-// critics score 4
-// genre 5
-// perspective 6
-// art 7
-// setting 8
-// narrative 9
+    fun saveGames(listGames: List<Game>) {
+        listGames.forEach { game ->
+            saveGame(game)
+        }
+        saveFile()
+    }
+}
