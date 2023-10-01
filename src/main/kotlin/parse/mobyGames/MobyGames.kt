@@ -76,7 +76,7 @@ class MobyGames: Parser() {
                 saveGamesInXls(gameList)
             }
 
-            sleep(20000)
+            sleep(15000)
         }
     }
 }
