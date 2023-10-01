@@ -33,7 +33,8 @@ class MBInfoBlock(val infoBlock: Element) {
     }
 
     fun getScore(): String {
-        return ""
+        val score = infoScore?.select("dd")?.first()?.select(".mobyscore")?.text()
+        return score ?: "-"
     }
 
     fun getGenre(): String {
