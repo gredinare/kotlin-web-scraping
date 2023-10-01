@@ -1,13 +1,21 @@
 package parse.mobyGames
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import model.GameModel
+import parse.ManipulateXls
 import parse.Parser
+import java.lang.Thread.sleep
 
 class MobyGames: Parser() {
     private val websiteUrl = "https://www.mobygames.com/game/"
-    private val outputFile = "src/main/kotlin/data/output/mobyGames.xlsx"
+    private val outputFile = "src/main/kotlin/output/mobyGames.xlsx"
 
-    fun parseGamePage(gameNumber: Int): GameModel {
+    private fun parseGamePage(gameNumber: Int): GameModel {
         val document = pageToDocument("$websiteUrl$gameNumber")
 
         // Take name of game
@@ -34,5 +42,41 @@ class MobyGames: Parser() {
             score = score,
             genre = genre
         )
+    }
+
+    private fun saveGamesInXls(gameModelList: List<GameModel>) {
+        val xlsFile = ManipulateXls(outputFile)
+        xlsFile.saveGames(gameModelList)
+    }
+
+    private fun parseListOfGames(start: Int, final: Int): List<GameModel> {
+        val gameModelList = mutableListOf<GameModel>()
+
+        runBlocking {
+            (start..final).map { i ->
+                async(Dispatchers.IO) {
+                    val game = parseGamePage(i)
+                    println(game)
+                    gameModelList.add(game)
+                }
+            }.awaitAll()
+        }
+
+        return gameModelList
+    }
+
+    fun parseGamesStepByStep(init: Int, until: Int, steps: Int) {
+        val scope = CoroutineScope(Dispatchers.IO)
+
+        for(i in init..until step steps) {
+
+            val gameList = parseListOfGames(i, i + steps - 1)
+
+            scope.launch {
+                saveGamesInXls(gameList)
+            }
+
+            sleep(20000)
+        }
     }
 }
