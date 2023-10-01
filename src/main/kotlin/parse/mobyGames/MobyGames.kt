@@ -18,15 +18,21 @@ class MobyGames: Parser() {
             name = name,
         )
 
-        val infoBlock = document.select("main").first()?.select("div#infoBlock")?.first()
+        val infoBlockElement = document.select("main").first()?.select("div#infoBlock")?.first()
+        val infoBlock = MBInfoBlock(infoBlockElement!!)
+
+        val release = infoBlock.getRelease()
+        val platform = infoBlock.getPlatform()
+        val score = infoBlock.getScore()
+        val genre = infoBlock.getGenre()
 
         return GameModel(
             id = gameNumber,
             name = name,
-            release = "animal",
-            platform = listOf(),
-            score = "mnesarchum",
-            genre = "singulis"
+            release = release,
+            platform = platform,
+            score = score,
+            genre = genre
         )
     }
 }
