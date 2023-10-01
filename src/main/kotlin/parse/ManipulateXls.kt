@@ -1,8 +1,8 @@
-package parse.mobyGames
+package parse
 
+import model.GameModel
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.ss.usermodel.WorkbookFactory
-import parse.mobyGames.model.GameModel
 import java.io.FileInputStream
 import java.io.FileOutputStream
 
@@ -13,19 +13,14 @@ class ManipulateXls(
 
     private fun saveGame(gameModel: GameModel) {
         val sheet = workbook.getSheetAt(0)
-        val row = sheet.createRow(gameModel.number)
+        val row = sheet.createRow(gameModel.id)
 
-        row.createCell(0).setCellValue(gameModel.number.toDouble())
+        row.createCell(0).setCellValue(gameModel.id.toDouble())
         row.createCell(1).setCellValue(gameModel.name)
         row.createCell(2).setCellValue(gameModel.release)
-        row.createCell(3).setCellValue(gameModel.mobyScore)
-        row.createCell(4).setCellValue(gameModel.criticScore)
+        row.createCell(3).setCellValue(gameModel.platform.toString())
+        row.createCell(4).setCellValue(gameModel.score)
         row.createCell(5).setCellValue(gameModel.genre)
-        row.createCell(6).setCellValue(gameModel.perspective)
-        row.createCell(7).setCellValue(gameModel.art)
-        row.createCell(8).setCellValue(gameModel.setting)
-        row.createCell(9).setCellValue(gameModel.narrative)
-        row.createCell(10).setCellValue(gameModel.platform.toString())
     }
 
     private fun saveFile() {

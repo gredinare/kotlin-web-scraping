@@ -8,7 +8,8 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import parse.Parser
-import parse.mobyGames.model.GameModel
+import model.GameModel
+import parse.ManipulateXls
 import java.lang.Thread.sleep
 
 class MobyGames: Parser() {
