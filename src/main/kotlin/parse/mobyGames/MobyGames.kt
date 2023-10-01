@@ -15,7 +15,7 @@ class MobyGames: Parser() {
     private val websiteUrl = "https://www.mobygames.com/game/"
     private val outputFile = "src/main/kotlin/output/mobyGames.xlsx"
 
-    private fun parseGamePage(gameNumber: Int): GameModel {
+    fun parseGamePage(gameNumber: Int): GameModel {
         val document = pageToDocument("$websiteUrl$gameNumber")
 
         // Take name of game

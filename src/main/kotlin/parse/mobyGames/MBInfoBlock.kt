@@ -1,7 +1,6 @@
 package parse.mobyGames
 
 import org.jsoup.nodes.Element
-import org.jsoup.select.Elements
 
 class MBInfoBlock(val infoBlock: Element) {
     private val infoRelease = infoBlock.select(".info-release").first()?.select(".metadata")
@@ -14,19 +13,24 @@ class MBInfoBlock(val infoBlock: Element) {
     }
 
     fun getPlatform(): List<String> {
-        val releaseList = getListAndTile(infoRelease)
+        val releasePlatforms = getPlatformByReleasedDate()
+
+        return releasePlatforms.ifEmpty {
+            getReleasedPlatform()
+        }
+    }
+
+    private fun getReleasedPlatform(): List<String> {
+        val platform = infoRelease?.select("dd")?.first()?.select("a")?.last()?.text()
+        return listOf(platform!!)
+    }
+
+    private fun getPlatformByReleasedDate(): List<String> {
         val releasePlatforms: ArrayList<String> = arrayListOf()
 
-        try {
-            val tempRelease = releaseList["Releases by Date (by platform)"]
-            val listReleasePlatform = tempRelease?.split(" ")
-
-            for(i in 1..listReleasePlatform!!.size step 2) {
-                releasePlatforms.add(listReleasePlatform[i].replace("(", "").replace(")", ""))
-            }
-        } catch (e: Exception) {
-            val tempRelease = releaseList["Released"]?.split(" ")
-            releasePlatforms.add(tempRelease!![2])
+        val listReleasePlatform = infoRelease?.select("ul#platformLinks")?.select("li")
+        listReleasePlatform?.forEach {
+            releasePlatforms.add(it.select("span").select("a").text())
         }
 
         return releasePlatforms
@@ -40,19 +44,5 @@ class MBInfoBlock(val infoBlock: Element) {
     fun getGenre(): String {
         val genre = infoGenres?.select("dd")?.first()?.select("a")?.first()?.text()
         return genre ?: "-"
-    }
-
-    private fun getListAndTile(metadata: Elements?): Map<String, String> {
-
-        val dtElements = metadata?.select("dt")?.eachText()
-        val ddElements = metadata?.select("dd")?.eachText()
-
-        val hashMap = hashMapOf<String, String>()
-
-        for(i in dtElements!!.indices) {
-            hashMap.put(dtElements[i], ddElements!![i])
-        }
-
-        return hashMap
     }
 }
