@@ -38,7 +38,8 @@ class MBInfoBlock(val infoBlock: Element) {
     }
 
     fun getGenre(): String {
-        return ""
+        val genre = infoGenres?.select("dd")?.first()?.select("a")?.first()?.text()
+        return genre ?: "-"
     }
 
     private fun getListAndTile(metadata: Elements?): Map<String, String> {
