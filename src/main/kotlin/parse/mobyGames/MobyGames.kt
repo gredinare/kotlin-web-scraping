@@ -1,29 +1,27 @@
 package parse.mobyGames
 
-import data.ManipulateXls
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import model.Game
-import org.jsoup.nodes.Element
 import parse.Parser
+import parse.mobyGames.model.GameModel
 import java.lang.Thread.sleep
 
 class MobyGames: Parser() {
     private val websiteUrl = "https://www.mobygames.com/game/"
     private val outputFile = "src/main/kotlin/data/output/mobyGames.xls"
 
-    fun parseGamePage(gameNumber: Int): Game {
+    fun parseGamePage(gameNumber: Int): GameModel {
         val document = pageToDocument("$websiteUrl$gameNumber")
 
         // Take infos of game
         val name: String = document.select(".mb-0").first()?.text() ?: "null"
 
-        if(name == "null") return Game(
+        if(name == "null") return GameModel(
             number = gameNumber,
             name = name,
         )
@@ -48,7 +46,7 @@ class MobyGames: Parser() {
         val platform: List<String> = mutableListOf()
 
 
-        return Game(
+        return GameModel(
             number = gameNumber,
             name = name,
             release = release,
@@ -63,31 +61,26 @@ class MobyGames: Parser() {
         )
     }
 
-    private fun releaseAndPlatform(releaseInfo: Element?): List<String> {
-        val consoleList: List<String> = mutableListOf()
 
-        return consoleList
-    }
+    @OptIn(DelicateCoroutinesApi::class)
+    private fun parseListOfGames(start: Int, final: Int): List<GameModel> {
+        val gameModelList = mutableListOf<GameModel>()
 
-    private fun parseListOfGames(start: Int, final: Int): List<Game> {
-        val gameList = mutableListOf<Game>()
-
-        runBlocking {
-            coroutineScope {
-                (start..final).map { i ->
-                    async(Dispatchers.IO) {
-                        val game = parseGamePage(i)
-                        gameList.add(game)
-                    }
-                }.awaitAll()
-            }
+        GlobalScope.async {
+            (start..final).map { i ->
+                async(Dispatchers.IO) {
+                    val game = parseGamePage(i)
+                    gameModelList.add(game)
+                }
+            }.awaitAll()
         }
-        return gameList
+
+        return gameModelList
     }
 
-    private fun saveGamesInXls(gameList: List<Game>) {
+    private fun saveGamesInXls(gameModelList: List<GameModel>) {
         val xlsFile = ManipulateXls(outputFile)
-        xlsFile.saveGames(gameList)
+        xlsFile.saveGames(gameModelList)
     }
 
     fun parseGamesStepByStep(init: Int, steps: Int, until: Int) {
@@ -108,14 +101,3 @@ class MobyGames: Parser() {
 
 
 }
-// number 0
-// name 1
-// released 2
-// console 3
-// mobyScore 4
-// critics score 5
-// genre 6
-// perspective 7
-// art 8
-// setting 9
-// narrative 10
