@@ -5,8 +5,8 @@ fun main(args: Array<String>) {
     val stopwatch = StopWatch()
     stopwatch.start()
 
-    val start = 3001
-    val final = 4000
+    val start = 4001
+    val final = start + 999
     val steps = 100
 
     for(i in start..final step steps) {
