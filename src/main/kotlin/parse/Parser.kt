@@ -13,7 +13,10 @@ abstract class Parser {
         while (page == "error code: 1015") {
             try {
                 skrape(HttpFetcher) {
-                    request { url = websiteUrl }
+                    request {
+                        url = websiteUrl
+                        timeout = 600000
+                    }
                     response { page = responseBody }
                 }
             } catch (e: Exception) {
