@@ -20,5 +20,5 @@ fun getAndSave1000Games(initial: Int) {
 }
 
 fun main(args: Array<String>) {
-    getAndSave1000Games(50001)
+    getAndSave1000Games(100001)
 }
