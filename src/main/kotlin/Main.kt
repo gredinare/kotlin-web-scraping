@@ -6,7 +6,7 @@ fun getAndSave1000Games(initial: Int) {
     val stopwatch = StopWatch()
     stopwatch.start()
 
-    val final = initial + 1999
+    val final = initial + 9999
     val steps = 100
 
     for(i in initial..final step steps) {
@@ -20,5 +20,5 @@ fun getAndSave1000Games(initial: Int) {
 }
 
 fun main(args: Array<String>) {
-    getAndSave1000Games(38001)
+    getAndSave1000Games(50001)
 }
