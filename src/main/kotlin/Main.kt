@@ -2,11 +2,11 @@
 import org.apache.commons.lang3.time.StopWatch
 import parse.mobyGames.MobyGames
 
-fun getAndSave1000Games(initial: Int) {
+fun getAndSaveNGames(initial: Int, n: Int) {
     val stopwatch = StopWatch()
     stopwatch.start()
 
-    val final = initial + 29999
+    val final = initial + n
     val steps = 100
 
     for(i in initial..final step steps) {
@@ -20,5 +20,5 @@ fun getAndSave1000Games(initial: Int) {
 }
 
 fun main(args: Array<String>) {
-    getAndSave1000Games(100001)
+    getAndSaveNGames(130001, 1000)
 }
