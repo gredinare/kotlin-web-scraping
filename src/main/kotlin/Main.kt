@@ -20,5 +20,5 @@ fun getAndSaveNGames(initial: Int, n: Int) {
 }
 
 fun main(args: Array<String>) {
-    getAndSaveNGames(130001, 1000)
+    getAndSaveNGames(132001, 3999)
 }
